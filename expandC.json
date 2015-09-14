@@ -1,0 +1,16 @@
+{
+    "main":"main.c",
+    "output":"main",
+
+    "CC":"gcc",      
+    "ccArg":"",     
+    "dest":"dest/",
+
+     "test":"testdata/a/add.txt",
+     "test_result":"testdata/a/add_result.txt",
+
+    "DIFF":"diff",
+    "diffArg":"-b",
+
+     "watchfile":["main.c"]
+}
