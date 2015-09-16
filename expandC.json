@@ -6,11 +6,11 @@
     "ccArg":"",     
     "dest":"dest/",
 
-     "test":"testdata/a/add.txt",
-     "test_result":"testdata/a/add_result.txt",
+     "test":"testdata/develop.txt",
+     "test_result":"testdata/develop_result.txt",
 
     "DIFF":"diff",
     "diffArg":"-b",
 
-     "watchfile":["main.c"]
+     "watchfile":["main.c","clib/**/*"]
 }
