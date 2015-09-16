@@ -1,6 +1,6 @@
 {
     "main":"main.c",
-    "output":"main",
+    "output":"main.exe",
 
     "CC":"gcc",      
     "ccArg":"",     

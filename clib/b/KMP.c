@@ -1,5 +1,6 @@
 /*
  * KMP 算法
+ * 返回值为字符串中某个子字符串的数量
  * 参见: http://hihocoder.com/problemset/problem/1015
  */
 #ifndef __CLIB_B_KMP_C__
