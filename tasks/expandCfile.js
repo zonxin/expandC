@@ -68,6 +68,9 @@ module.exports = function(grunt) {
         
         expand.list = [];
         content = expand(content,path.dirname(),options.recursion,options.keepdefine);
+        // rm comment
+        var reg = /\/\*[\w\W]*?\*\/\n?/g;
+        content = content.replace(reg,"");
 
         // Write the destination file.
         grunt.file.write(f.dest, content);
