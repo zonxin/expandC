@@ -71,6 +71,9 @@ module.exports = function(grunt) {
         // rm comment
         var reg = /\/\*[\w\W]*?\*\/\n?/g;
         content = content.replace(reg,"");
+        reg = /\n+/g;
+        //删除多余的换行
+        content = content.replace(reg,"\n");
 
         // Write the destination file.
         grunt.file.write(f.dest, content);

@@ -18,6 +18,7 @@
 
 1. [计算二进制中1的个数](b/count1binary.c)
 1. [并行计算二进制中1的个数](b/count1binaryParallel.c)
+1. [连续子向量的最大和](b/findMaxSubArraySum.c)
 1. [有限状态机--KMP算法](b/KMP.c)
 1. [有限状态机--计算不连续子字符串的个数](b/countDisctnSubstr.c)
 1. [栈--游程编码解码后数据长度](b/uncmprsLength.c)
