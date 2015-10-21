@@ -15,7 +15,7 @@ module.exports= function (grunt){
 
         // create ".h" 文件
         file = path.join(path.dirname(file), path.basename(file,ext)+".h");
-        grunt.file.write(file,'#include "' + filename + '"');
+        grunt.file.write(file,'#include "' + filename + '"\n');
         grunt.log.writeln('File "' + file + '" created.');
         
         // add ".h" to main.js
@@ -30,6 +30,16 @@ module.exports= function (grunt){
         }
         grunt.file.write(main,content);
         grunt.log.writeln("'" + newline.slice(0,-1) + "' >>  " +main );
+
+        var tdir = path.join("./testdata/",path.normalize(file).replace("clib","").replace(/\.h$/,"/"));
+        var str="1\n2\n3\n4\n";
+        file = tdir + 'test1in.txt';
+        grunt.file.write(file,"4\n"+content);
+        grunt.log.writeln('File "' + file + '" created.');
+
+        file = tdir + 'test1out.txt';
+        grunt.file.write(file,content);
+        grunt.log.writeln('File "' + file + '" created.');
         
     }
     grunt.registerTask('add',"add file",createfile);

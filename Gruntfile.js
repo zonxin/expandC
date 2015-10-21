@@ -1,40 +1,18 @@
 var path = require("path");
+
+
+  // Please see the Grunt documentation for more information regarding task
+  // creation: http://gruntjs.com/creating-tasks
+
 module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
-        
         config:grunt.file.readJSON("expandC.json"),
-        compile_cmd: "<%= config.CC %>  "+ 
-                     "<%= config.main %> " + 
-                     "<%= config.ccArg %> " + 
-                     "-o <%= config.output %>",
-
-        expandCfile:{
-            main:{
-                src:['<%= config.main %>'],
-                dest:'<%= config.dest %><%= config.main %>'
-            }
-        },
 
         add:{ main:"<%= config.main %>" },
 
-        shell:{
-            before:{
-                command:"<%= compile_cmd %>"
-            },
-            beforetest:{
-                command:"./<%= config.output %> < <%= config.test %> | " +
-                        "<%= config.DIFF %> <%= config.diffArg %> -- - <%= config.test_result %>",
-            },
-            after:{
-                command:"<% if (config.dest) { %> cd <%= config.dest %> && <% } %> <%= compile_cmd %>"
-            },
-            aftertest:{
-                command:"./<%= config.dest %><%= config.output %> < <%= config.test %> |"+
-                        " <%= config.DIFF %> <%= config.diffArg %> -- - <%= config.test_result %>"
-            }
-        },
+        shell:{ make:{ command:"make" }},
 
         watch:{
             files:"<%= config.watchfile %>",
@@ -46,12 +24,61 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-shell");
     grunt.loadNpmTasks("grunt-contrib-watch");
     
-    // 默认被执行的任务列表。
-    grunt.registerTask('pretest', ['shell:before','shell:beforetest']);
-    grunt.registerTask('build', ['expandCfile']);
-    grunt.registerTask('finaltest', ['build','shell:after','shell:aftertest']);
+    grunt.registerTask('build', function(input,output){
+        var options = { recursion:16,keepdefine:false };
+        var src = input||'main.c';
+        var content = grunt.file.read(src);
+        
+        expand.list = [];
+        content = expand(content,path.dirname(),options.recursion,options.keepdefine);
+        // rm comment
+        var reg = /\/\*[\w\W]*?\*\/\n?/g;
+        content = content.replace(reg,"");
+        reg = /\n+/g;
+        //删除多余的换行
+        content = content.replace(reg,"\n");
 
-    grunt.registerTask('default', ['finaltest']);
+        // Write the destination file.
+        var dest = output||'dest/'+src;
+        grunt.file.write(dest, content);
+
+        // Print a success message.
+        grunt.log.writeln('File "' + dest + '" created.');
+    });
+
+    grunt.registerTask('default', ['shell:make']);
+
+    function expand(content,cwd,count,keepdefine)
+    {
+        if(count < 0 )  { grunt.fail.warn("There are too much recursion"); }
+
+        var regx = /#include\s*"([\w.\\/]+?)"/g; // include file
+
+        content = content.replace(regx,function(str,filename){
+            var fullpath = path.join(cwd,filename);
+            fullpath = path.normalize(fullpath);
+            // 防止重复包含同一个文件
+            var i;
+            for(i=0;i<expand.list.length;i++){
+                if( expand.list[i] === fullpath){
+                    grunt.log.writeln("skip "+ fullpath+ " because it has been included.") ;
+                    return "";
+                }
+            }
+            expand.list.push(fullpath);
+
+            grunt.log.writeln("Entering "+ fullpath + "...");
+            var code = grunt.file.read(fullpath);
+            if(!keepdefine){
+                code = code.replace(/^[\w\W]*?#define.*?\n/,""); // first define and before it
+                code = code.replace(/#endif\s*$/,""); // 最后一个#endif
+            }
+
+            return expand(code,path.dirname(fullpath),count-1,keepdefine);
+        });
+        return content;
+    }
+    expand.list =[];
 };
 
 

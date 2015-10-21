@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include "clib/types/x64.h"
+#include "clib/b.h"
+#include "clib/bb.h"
 
 #define MAXLEN 1000
 char str[MAXLEN];
