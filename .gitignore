@@ -1,3 +1,4 @@
 node_modules
 dest
+_temp
 *.swp

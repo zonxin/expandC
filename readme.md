@@ -23,9 +23,10 @@
 
 执行
 
-    make MAIN=demo.c TEST=a/add
+    make MAIN=demo.c
 
 会自动编译测试，在 `dest/demo.c` 中生成的就是代码。
+注意 `MAIN` 指明的第一行为测试数据所在文件夹
 
 ### grunt 命令
 
@@ -40,7 +41,6 @@
 
 ### make 配置
 
-1. `T`:测试数据所在路径，相对于"testdata",默认为"a/same"
 1. `MAIN`:main函数所在文件，默认为"main.c"
 2. `OUTDIR`:输出编译后代码输出文件夹，默认为"dest"
 3. `DIFF`:对比输入输出的程序，默认为"diff"

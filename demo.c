@@ -1,3 +1,4 @@
+/* TestFilePath:testdata/a/add */
 #include <stdio.h>
 #include "clib/a/add.h"
 

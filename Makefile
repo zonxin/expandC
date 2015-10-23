@@ -7,13 +7,6 @@ EXEC:=$(OUTDIR)/$(basename $(MAIN)).exe
 DIFF:=diff 
 DFLAGS:=-b
 
-T:=a/same
-TDIR=testdata/$(T)
-TESTDATA=$(wildcard $(TDIR)/test*in.txt)
-TESTFAKE=$(subst in.txt,,$(TESTDATA))
-TIMETEST=$(wildcard $(TDIR)/time*.txt)
-TIMEFAKE=$(subst .txt,,$(TIMETEST))
-
 default:t
 .PHONY:default
 
@@ -26,13 +19,26 @@ build:$(OUTPUT)
 $(OUTPUT):$(MAIN) clib/a/* clib/b/* clib/data_structure/*
 	grunt build:$<:$@
 
+TEMP=_temp
+TPAHTFILE=$(TEMP)/testpath.makefile
+-include  $(TPAHTFILE)
+TDIR:=testdata/a/same
+TESTDATA=$(wildcard $(TDIR)/test*in.txt)
+TESTFAKE=$(subst in.txt,,$(TESTDATA))
+TIMETEST=$(wildcard $(TDIR)/time*.txt)
+TIMEFAKE=$(subst .txt,,$(TIMETEST))
+# testpath
+$(TPAHTFILE):$(MAIN)
+	-mkdir $(TEMP)
+	sed -n '1s/.*TestFilePath:\(\S*\)\/\?.*$$/override TDIR=\1/gp' $^ > $@
 # test 
-.PHONY:$(TESTFAKE) t
-t: $(TESTFAKE) $(EXEC)
+.PHONY:t $(TESTFAKE)
+t: $(TPAHTFILE) $(TESTFAKE) $(EXEC)
 $(TESTFAKE):%:%in.txt %out.txt $(EXEC)
-	@echo test data in file \"$<\"
-	@./$(EXEC) < $< | $(DIFF) - $(DFLAGS) $(filter %out.txt,$^)
-	@echo AC
+	@echo Testing data in file \"$<\"
+	@./$(EXEC) < $< > $(TEMP)/out.txt
+	@$(DIFF) $(TEMP)/out.txt $(DFLAGS) $(filter %out.txt,$^) > /dev/null || $(DIFF) $(TEMP)/out.txt $(filter %out.txt,$^) -y --left-column
+	@echo ...AC
 
 # time test 
 .PHONY:$(TIMEFAKE) tt t
@@ -42,4 +48,5 @@ $(TIMEFAKE):%:%.txt
 
 .PHONY: clean
 clean:
-	-rm -rf dest
+	-rm -rf $(OUTDIR)
+	-rm -rf $(TEMP)

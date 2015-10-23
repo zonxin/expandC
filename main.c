@@ -1,3 +1,4 @@
+/* TestFilePath:testdata/a/same/  */
 #include <stdio.h>
 #include "clib/types/x64.h"
 
