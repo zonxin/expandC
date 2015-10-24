@@ -13,7 +13,7 @@ void bubbleSort(void *base,size_t n,size_t size,
 {
     int i,j;
     for(i=0;i<n-1;i++){
-    for(j=0;j<n-1-j;j++){
+    for(j=0;j<n-1-i;j++){
         if(compare(base+j*size,base+(j+1)*size)>0) {
             swp(base+j*size,base+(j+1)*size,size);
         }
