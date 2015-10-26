@@ -7,6 +7,7 @@
 
 1. [双向循环带头链表--linux 内核链表](data_structure/linux_list.c)
 1. [linux 哈希表](data_structure/linux_hlist.c)
+1. [排序--冒泡排序](data_structure/bubbleSort.c)
 
 新手练习
 ---
