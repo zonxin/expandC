@@ -17,8 +17,8 @@ ELEMTYPE findMaxSubArraySum(ELEMTYPE *ar,int n)
     ELEMTYPE maxsofar=0,maxendinghere=0;
     int i=0;
     for(i=0;i<n;i++){
-        maxendinghere = max(maxendinghere+ar[i],0);
-        maxsofar = max(maxsofar,maxendinghere);
+        maxendinghere = Math_max(maxendinghere+ar[i],0);
+        maxsofar = Math_max(maxsofar,maxendinghere);
     }
     return maxsofar;
 }

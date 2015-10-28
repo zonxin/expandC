@@ -22,7 +22,7 @@ int triNumber(int value[][MAXLEVEL+1],int level)
     for(i=1;i<level;i++){
         cur[0] = pre[0]+value[i][0];
         for(j=1;j<i;j++){
-            cur[j] = value[i][j] +(max(pre[j-1],pre[j]));
+            cur[j] = value[i][j] +(Math_max(pre[j-1],pre[j]));
         }
         cur[j] = value[i][j] + pre[j-1];
         tmp = cur ; cur = pre ; pre = tmp ;

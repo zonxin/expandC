@@ -9,8 +9,8 @@ typedef int GCDTYPE;
 GCDTYPE GCD(GCDTYPE a,GCDTYPE b)
 {
     GCDTYPE imax,imin,t;
-    imax = max(a,b);
-    imin = min(a,b);
+    imax = Math_max(a,b);
+    imin = Math_min(a,b);
     while(t = imax%imin) {
         imax = imin;
         imin = t;
