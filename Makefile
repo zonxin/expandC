@@ -12,7 +12,7 @@ default:t
 
 # generate exec
 $(EXEC): $(OUTPUT)
-	$(CC) -o $@ $(CFLAGS) $^
+	$(CC) -o $@ $^ $(CFLAGS)
 # build
 .PHONY:build
 build:$(OUTPUT)
