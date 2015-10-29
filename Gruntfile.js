@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     
     grunt.registerTask('build', function(input,output){
-        var options = { recursion:16,keepdefine:false };
+        var options = { recursion:256,keepdefine:false };
         var src = input||'main.c';
         var content = grunt.file.read(src);
         

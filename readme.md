@@ -4,7 +4,7 @@
 
 [题目列表(clib/readme.md)](clib/readme.md)
 
-此代码只适合在线笔试和学习交流使用。（不会处理一些在在线笔试的时候没有必要处理的错误）
+此代码只适合在线笔试和学习交流使用（不会处理一些在在线笔试的时候没有必要处理的错误）。
 欢迎大家贡献代码。
 
 ## 自动代码生成器
@@ -17,16 +17,15 @@
     # clone 此版本库
     git clone https://github.com/zonxin/expandC.git
     # 进入版本库的目录
-    cd grunt-expandC
+    cd expandC
     # 安装依赖模块
     npm install
 
 执行
 
-    make MAIN=demo.c
+    make
 
-会自动编译测试，在 `dest/demo.c` 中生成的就是代码。
-注意 `MAIN` 指明的第一行为测试数据所在文件夹
+会自动编译测试，在 `dest/main.c` 中生成的就是代码。
 
 ### grunt 命令
 
@@ -35,7 +34,7 @@
 
 ### make 命令
 
-1. `make build`:生成文件
+1. `make build`:生成文件，其中的相对路径是 Gruntfile.js 所在的路径
 2. `make t`:默认，编译并测试，利用`T`中的，"test\*in.txt"为测试数据，"test\*out.txt"为对应的结果
 3. `make tt`:运行时间测试，根据选项`T`中，"time\*.txt"测试数据
 

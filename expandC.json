@@ -12,5 +12,5 @@
     "DIFF":"diff",
     "diffArg":"-b",
 
-     "watchfile":["main.c","clib/**/*"]
+     "watchfile":["testdata/**/*","clib/**/*"]
 }
