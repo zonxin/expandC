@@ -33,4 +33,5 @@
 1. [贪心算法--任务安排](b/taskArrage.c)
 1. [动态规划--连续子向量的最大和](b/findMaxSubArraySum.c)
 1. [动态规划--数字三角形](b/triNumber.c)
+1. [动态规划--最长回文子串](b/findMaxPldrmSubstr.c)
 
