@@ -42,7 +42,7 @@ module.exports= function (grunt){
         var tdir = path.join("./testdata/",path.normalize(file).replace("clib","").replace(/\.h$/,"/"));
         content = content.replace(testpath,"TestFilePath:"+tdir);
         content = content.replace(regFn,fn);
-        main = tdir + 'main.c';
+        main = 'main.c';
         grunt.file.write(main,content);
         grunt.log.writeln('File "' + main + '" created.');
         //creat readme.md
