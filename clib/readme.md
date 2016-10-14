@@ -16,6 +16,7 @@
 1. [求两个数的最大公约数](a/gcd.c)
 1. [判断一个数是否为质数](a/isPrime.c)
 1. [N^N的末位数字](a/lastDigitOfNPowerN.c)
+1. [矩形判断](a/isRectangle.c)
 
 进阶
 ---
