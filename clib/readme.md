@@ -8,6 +8,12 @@
 1. [双向循环带头链表--linux 内核链表](data_structure/linux_list.c)
 1. [linux 哈希表](data_structure/linux_hlist.c)
 1. [排序--冒泡排序](data_structure/bubbleSort.c)
+1. [排序--选择排序](data_structure/Sort/selectionSort.c)
+1. [排序--插入排序](data_structure/Sort/insectionSort.c)
+1. [排序--希尔排序](data_structure/Sort/shellSort.c)
+1. [排序--归并排序](data_structure/Sort/mergeSort.c)
+1. [排序--快速排序](data_structure/Sort/quickSort.c)
+ 
 
 新手练习
 ---
