@@ -8,6 +8,7 @@
 1. [双向循环带头链表--linux 内核链表](data_structure/linux_list.c)
 1. [linux 哈希表](data_structure/linux_hlist.c)
 1. [各种排序](data_structure/Sort)
+1. [堆](data_structure/Heap)
 
  
 
