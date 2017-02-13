@@ -62,27 +62,23 @@ void freeBinarySearchTree(BinarySearchTree head){
 // 获取一个键值,返回结果在pv中,若不存在返回 0
 int BST_get(BinarySearchTree head,Key key,Value *pv)
 {
-    BinarySearchTree subTree;
-    if(*head==NULL) { return 0; } // head->root == NULL ?
-    int cmp = compare(key,(*head)->key); // head->root->key 根节点的 key 与 输入的 key 做比较
-    if(cmp == 0) {
-        *pv = (*head)->val; // head -> root -> val;
-        return 1;
-    }
-    else if(cmp < 0) { subTree = &(*head)->left; }  // LT
-    else{ subTree = &(*head)->right; } // GT
-    return BST_get(subTree,key,pv);
+    if(*head==NULL) { return 0; } 
+    int cmp = compare(key,(*head)->key); 
+    if     (cmp < 0) {return BST_get(&(*head)->left,key,pv);}
+    else if(cmp > 0) { return BST_get(&(*head)->right,key,pv); }
+    if(cmp == 0) { *pv = (*head)->val; return 1; }
 }
 
 int BST_put(BinarySearchTree head,Key key,Value val)
 {
-    BinarySearchTree subTree;
-    if(*head == NULL) {*head = _newBSTNode_(key,val); return 1;} 
+    if((*head)==NULL) {
+        (*head) = _newBSTNode_(key,val);
+        return 1;
+    }
     int cmp = compare(key,(*head)->key);
-    if(cmp == 0) { (*head)->val = val; return 0;}
-    else if(cmp < 0) { subTree = &(*head)->left; }  // LT
-    else{ subTree = &(*head)->right; } // GT
-    return BST_put(subTree,key,val);
+    if     (cmp < 0) { return BST_put(&(*head)->left,key,val); }
+    else if(cmp > 0) { return BST_put(&(*head)->right,key,val); } 
+    else  { (*head)->val = val; return 0; }
 }
 
 _BSTNode_ _BST_delMin_(BinarySearchTree head)
