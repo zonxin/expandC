@@ -26,6 +26,7 @@ _BSTNode_ _newBSTNode_(Key key,Value val)
     _BSTNode_ p = (_BSTNode_) malloc(sizeof(struct _BSTNODEST_));
     p->key = key;
     p->val = val;
+    return p;
 }
 /* 只画出左子树的数据结构
  *                                ┌──────┐     ┌──────┐     ┌──────┐
@@ -45,6 +46,7 @@ BinarySearchTree newBinarySearchTree()
 {
     BinarySearchTree head = (BinarySearchTree)malloc(sizeof(_BSTNode_));
     *head = NULL;  //  head -> root = NULL
+    return head;
 }
 void _freeSubTree_(BinarySearchTree head)
 {

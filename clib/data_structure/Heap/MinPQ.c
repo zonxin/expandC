@@ -55,13 +55,14 @@ int MinPQ_insert(MinPQ h,Ord v)
     MinPQ_swim(h,h->size);
     return 0;
 }
-Ord MinPQ_delMin(MinPQ h)
+int MinPQ_delMin(MinPQ h,Ord *m)
 {
     // 为了计算方便不使用下标 0
-    Ord min = h->pq[1];
+    if(h->size<=0) { return 0; }
+    *m = h->pq[1];
     h->pq[1] = h->pq[(h->size)--];
     MinPQ_sink(h,1);
-    return min;
+    return 1;
 }
 
 #endif

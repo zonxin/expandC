@@ -1,6 +1,8 @@
 #ifndef __CLIB_DATA_STRUCTURE_MAXPQ_C__
 #define __CLIB_DATA_STRUCTURE_MAXPQ_C__
 
+// #define Ord int
+// #define lt(a,b) ((a)-(b)<0?1:0)
 #include <malloc.h>
 typedef struct _MaxPQ_ {
     Ord *pq;// 为了计算方便不使用下标 0
@@ -55,12 +57,13 @@ int MaxPQ_insert(MaxPQ h,Ord v)
     MaxPQ_swim(h,h->size);
     return 0;
 }
-Ord MaxPQ_delMax(MaxPQ h)
+int MaxPQ_delMax(MaxPQ h,Ord *m)
 {
-    Ord max = h->pq[1];
+    if(h->size <=0) { return 0; }
+    *m = h->pq[1];
     h->pq[1] = h->pq[(h->size)--];
     MaxPQ_sink(h,1);
-    return max;
+    return 1;
 }
 
 #endif

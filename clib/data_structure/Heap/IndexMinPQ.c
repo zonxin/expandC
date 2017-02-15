@@ -68,8 +68,9 @@ int IndexMinPQ_insert(IndexMinPQ p,int k,Ord v){
     IndexMinPQ_swim(p,p->size);
     return 0;
 }
-Ord IndexMinPQ_min(IndexMinPQ p){
-    return p->keys[p->pq[1]];
+int IndexMinPQ_min(IndexMinPQ p,Ord *m){
+    *m = p->keys[p->pq[1]];
+    return 1;
 }
 int IndexMinPQ_delMin(IndexMinPQ p){
     int index = p->pq[1],n=p->size;

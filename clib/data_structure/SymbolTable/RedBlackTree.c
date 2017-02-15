@@ -23,11 +23,13 @@ _RBnode_ _newRBnode_(Key key,Value val,_RBcolor_ color)
     p->key = key;
     p->val = val;
     p->color = color;
+    return p;
 }
 RedBlackTree newRedBlackTree()
 {
     RedBlackTree head = (RedBlackTree)malloc(sizeof(_RBnode_));
     *head = NULL;
+    return head;
 }
 void _freeRedBlackTree_(RedBlackTree head)
 {

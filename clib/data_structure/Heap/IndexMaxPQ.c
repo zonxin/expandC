@@ -68,8 +68,10 @@ int IndexMaxPQ_insert(IndexMaxPQ p,int k,Ord v){
     IndexMaxPQ_swim(p,p->size);
     return 0;
 }
-Ord IndexMaxPQ_max(IndexMaxPQ p){
-    return p->keys[p->pq[1]];
+int IndexMaxPQ_max(IndexMaxPQ p,Ord *m){
+    if(p->size<=0) { return 0; }
+    *m = p->keys[p->pq[1]];
+    return 1;
 }
 int IndexMaxPQ_delMax(IndexMaxPQ p){
     int index = p->pq[1],n=p->size;
