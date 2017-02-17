@@ -5,11 +5,18 @@
 #ifndef __CLIB_A_ISRECTANGLE_C__
 #define __CLIB_A_ISRECTANGLE_C__
 
+#include <string.h>
 #include "../../clib/types/Point.h"
 #include "../../clib/types/TwoInts/isEqualTwoInts.h"
 typedef struct _segment {
     Point p1,p2;
 }Segment,*pSegment;
+
+typedef Point* Key;
+typedef int Value;
+#define equal(p1,p2) ((p1)->x==(p2)->x && (p1)->y==(p2)->y)
+#include "../../clib/data_structure/SymbolTable/SymbolTable.h"
+
 int getDistanceSquare(Point *p1,Point *p2)
 {
     int dx = p1 -> x - p2 -> x,
@@ -18,31 +25,50 @@ int getDistanceSquare(Point *p1,Point *p2)
 }
 int isRectangle(pSegment segs)
 {
-    int i,j,arr[] = {1,2,3,-1}; Point p[4];
-    p[0].x = segs[0].p1.x; p[0].y = segs[0].p1.y;
-    p[1].x = segs[0].p2.x; p[1].y = segs[0].p2.y;
-    for(j=3;j>0;j--){
-        for(i = 0;i<j ;i++){
-            if(isEqualTwoInts(&p[4-j],&segs[arr[i]].p1)) { 
-                p[5-j].x = segs[arr[i]].p2.x; 
-                p[5-j].y = segs[arr[i]].p2.y; 
-                break;
-            }
-            if(isEqualTwoInts(&p[4-j],&segs[arr[i]].p2)) { 
-                p[5-j].x = segs[arr[i]].p1.x; 
-                p[5-j].y = segs[arr[i]].p1.y; 
-                break;
-            }
+    int i,j,index1,index2,count=0;
+    Point points[8];
+    int adj[4][4],mark[4],ord[4];  // 图
+    memset(adj,0,4*4*sizeof(int));
+    memset(mark,0,4*sizeof(int));
+    SymbolTable st = newSymbolTable(8);
+
+    for(i=0;i<4;i++){
+        if(!SymbolTable_get(st,&(segs[i].p1),&index1)){
+            index1 = count++;
+            points[index1].x = segs[i].p1.x;
+            points[index1].y = segs[i].p1.y;
+            SymbolTable_put(st,points+index1,index1);
         }
-        if(i == j) { return 0; }
-        for(;i<j;i++) { arr[i] = arr[i+1]; }
+        if(!SymbolTable_get(st,&(segs[i].p2),&index2)){
+            index2 = count++;
+            points[index2].x = segs[i].p2.x;
+            points[index2].y = segs[i].p2.y;
+            SymbolTable_put(st,points+index2,index2);
+        }
+        if(count>4) { freeSymbolTable(st); return 0; }
+        adj[index1][index2] = 1;
+        adj[index2][index1] = 1;
     }
-    // 对角线等长且相互平分的四边形是矩形
-    if( p[0].x + p[2].x == p[1].x + p[3].x &&
-        p[0].y + p[2].y == p[1].y + p[3].y &&
-        getDistanceSquare(&p[0],&p[2]) == getDistanceSquare(&p[1],&p[3])
-    ){ return 1; }
+    freeSymbolTable(st);
+    // 深度优先遍历
+    int current=0;
+    for(i=0;i<3;i++){
+        ord[i] = current; mark[current] = 1;
+        for(j=0;j<4 && (!adj[current][j] || mark[j]);j++){ }
+        if(j>=4) { return 0; }
+        current = j;
+    }
+    ord[i] = current; mark[current] = 1;
+    if(!adj[current][0]) { return 0; }
+
+    if(points[ord[0]].x +points[ord[2]].x == points[ord[1]].x + points[ord[3]].x &&
+       points[ord[0]].y +points[ord[2]].y == points[ord[1]].y + points[ord[3]].y &&
+        getDistanceSquare(&points[ord[0]],&points[ord[2]]) == getDistanceSquare(&points[ord[1]],&points[ord[3]]) 
+        ) { return 1; }
     return 0;
+
+    // 对角线等长且相互平分的四边形是矩形
+    return 1;
 }
 
 #endif
