@@ -15,6 +15,7 @@ Bag newBag(int n){
     b->base =(BagElem *)malloc(sizeof(BagElem)*n);
     b->size = 0;
     b->capacity = n;
+    return b;
 }
 void freeBag(Bag b) { free(b->base);free(b); }
 
