@@ -16,6 +16,7 @@ Stack newStack(int n)
     s->base = (SElem *)malloc(sizeof(SElem)*n);
     s->top = s->base;
     s->capacity = n;
+    return s;
 }
 void freeStack(Stack s) { free(s->base); free(s); }
 
