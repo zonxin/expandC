@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         var content = grunt.file.read(src);
         
         expand.list = [];
-        content = expand(content,path.dirname(),options.recursion,options.keepdefine);
+        content = expand(content,path.dirname(''),options.recursion,options.keepdefine);
         // rm comment
         var reg = /\/\*[\w\W]*?\*\/\n?/g;
         content = content.replace(reg,"");
